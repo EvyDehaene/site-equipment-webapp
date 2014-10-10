@@ -1,7 +1,12 @@
 package be.camco.entities;
 
+import java.util.List;
+import java.util.SortedSet;
+
+import be.camco.enums.DeviceType;
 import be.camco.enums.RemoteAccessibleType;
 import be.camco.interfaces.RemoteAccessible;
+import be.camco.valueobjects.DeviceProperty;
 
 
 public class RemoteAccessibleDevice extends Device implements RemoteAccessible{
@@ -10,14 +15,30 @@ public class RemoteAccessibleDevice extends Device implements RemoteAccessible{
 	private String password;
 	private String username;
 	
+	public RemoteAccessibleDevice(){
+		
+	}
 	
+	
+	
+	public RemoteAccessibleDevice(String name, DeviceType deviceType, String address, String parent, List<String> comments, SortedSet<DeviceProperty> properties,
+			RemoteAccessibleType remoteAccessibleType, String port, String password, String username) {
+		super(name, deviceType, address, parent, comments, properties);
+		this.setRemoteAccessibleType(remoteAccessibleType);
+		this.setPort(port);
+		this.setPassword(password);
+		this.setUsername(username);
+	}
+
+
+
 	@Override
-	public void setType(RemoteAccessibleType remoteAccessibleType) {
+	public void setRemoteAccessibleType(RemoteAccessibleType remoteAccessibleType) {
 		this.remoteAccessibleType=remoteAccessibleType;
 	}
 	
 	@Override
-	public RemoteAccessibleType getType() {
+	public RemoteAccessibleType getRemoteAccessibleType() {
 		return remoteAccessibleType;
 	}
 

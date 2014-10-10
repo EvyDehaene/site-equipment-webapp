@@ -2,7 +2,7 @@ package be.camco.valueobjects;
 
 import be.camco.enums.IOType;
 
-public class IO {
+public class IO implements Comparable<IO>{
 	private IOType ioType;
 	private int number;
 	private String name;
@@ -46,6 +46,17 @@ public class IO {
 	}
 	public void setOff(String off) {
 		this.off = off;
+	}
+
+	@Override
+	public String toString() {
+		return "IO [ioType=" + ioType + ", number=" + number + ", name=" + name
+				+ ", on=" + on + ", off=" + off + "]";
+	}
+
+	@Override
+	public int compareTo(IO o) {
+		return this.toString().compareTo(o.toString());
 	}
 	
 }

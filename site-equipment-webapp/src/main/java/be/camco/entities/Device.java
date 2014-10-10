@@ -16,6 +16,21 @@ public class Device implements Comparable<Device>{
 	private List<String> comments;
 	private SortedSet<DeviceProperty> properties;
 	
+	public Device(){
+		
+	}
+	
+	
+	public Device(String name, DeviceType deviceType, String address,String parent, List<String> comments,SortedSet<DeviceProperty> properties) {
+		this.name = name;
+		this.deviceType = deviceType;
+		this.address = address;
+		this.parent = parent;
+		this.comments = comments;
+		this.properties = properties;
+	}
+
+
 	public String getName() {
 		return name;
 	}

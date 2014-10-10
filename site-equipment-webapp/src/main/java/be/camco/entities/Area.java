@@ -1,11 +1,12 @@
 package be.camco.entities;
 
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class Area implements Comparable<Area>{
 	private String name;
 	private String description;
-	private SortedSet<DeviceGroup> deviceGroups;
+	private SortedSet<DeviceGroup> deviceGroups= new TreeSet<>();;
 
 public Area(String name, String description){
 		this.setName(name);

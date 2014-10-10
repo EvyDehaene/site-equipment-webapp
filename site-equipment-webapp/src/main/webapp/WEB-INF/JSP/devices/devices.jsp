@@ -10,12 +10,8 @@
 <body id="wrapper">
 	<c:import url="/WEB-INF/JSP/menu.jsp"/>
 	<h1>Devices</h1>
-	Hier komen de devices
-	<c:forEach items="${devices}" var="device">
-	<c:out value="${device.name}"/>
-		<h2>Device: ${device.name}</h2>
-		<p>${device.address}</p>
-	</c:forEach>
+	<c:choose>
+	<c:when test="${not empty devices}">
 	<table class="sortable">
 		<thead>
 			<tr>
@@ -35,7 +31,7 @@
 				<tr>
 					<td>
 					<c:choose>
-						<c:when test="${device.devicetype==WAGO}">
+						<c:when test="${device.deviceType==WAGO}">
 							<c:url value="devices/wago" var="wagoURL">
 								<c:param name = "wago" value="${device.type}"/>
 							</c:url>
@@ -61,7 +57,7 @@
 					<td><c:url value="devices/type" var="typeURL">
 							<c:param name="type" value="${device.deviceType}"/>
 						</c:url>
-						<a href = "${typeURL}">${device.devicetype}</a>
+						<a href = "${typeURL}">${device.deviceType}</a>
 					</td>
 					<td><c:forEach items="${device.comments}" var="comment">
 						${comment}<br/>
@@ -74,12 +70,18 @@
 						<a href="${propertyURL}">...</a>
 					</c:if>
 					</td>
-					<td>Type: ${device.remoteaccessibletype} Port: ${device.port}</td>
+					<td>Type: ${device.remoteAccessibleType} Port: ${device.port}</td>
 					<td>${device.username}</td>
 					<td>${device.password}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+	</c:when>
+	<c:otherwise>
+		Er zitten geen devices in de lijst
+	</c:otherwise>
+		
+	</c:choose>
 </body>
 </html>

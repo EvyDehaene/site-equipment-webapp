@@ -48,7 +48,7 @@ public class ReadXml {
 	Site site = context.getBean(Site.class);
 	public String urlString = site.getUrlString();
 	public String locationString=site.getLocationString();
-	public String versionUrlString = site.getVersionUrlString();
+	//public String versionUrlString = site.getVersionUrlString();
 	public Date date = new Date();
 	String version=null;
 	VersionClientSocket versionClientSocket;
@@ -88,8 +88,8 @@ public class ReadXml {
 //			xmlClientSocket.connect();
 //			xmlClientSocket.readResponse();
 //			Document document =  loadDocument(xmlClientSocket.receivedXml);
-			URL url = new URL(urlString);
-			Document document = this.getDocument(url);
+			//URL url = new URL(urlString);
+			Document document = loadDocument(new File("D:\\site-equipment.xml"));//this.getDocument(url);
 			Element siteEquipment=document.getDocumentElement();
 			System.out.println(siteEquipment.getAttribute("site")+ " " +siteEquipment.getAttribute("version"));
 			NodeList nodeList = document.getDocumentElement().getChildNodes();
@@ -136,7 +136,7 @@ public class ReadXml {
 											if (wagoNode instanceof Element){
 												switch (((Element) wagoNode).getTagName()){
 												case "remote-access":
-													wago.setType(this.getRemoteAccessibleType(wagoNode));
+													wago.setRemoteAccessibleType(this.getRemoteAccessibleType(wagoNode));
 													wago.setPort(((Element) wagoNode).getAttribute("port"));
 													NodeList wagoAuthenticationNodes = wagoNode.getChildNodes();
 													for (int w = 0; w < wagoAuthenticationNodes.getLength(); w++){
@@ -163,6 +163,7 @@ public class ReadXml {
 											}
 										}
 										deviceList.add(wago);
+										System.out.println("wago added");
 										deviceGroup.addDevice(wago);
 									}
 									else if (((Element) cNode).getAttribute("type") != null){
@@ -177,7 +178,7 @@ public class ReadXml {
 											if (remoteAccessibleNode instanceof Element){
 												switch (((Element) remoteAccessibleNode).getTagName()){
 												case "remote-access":
-													remoteAccessibleDevice.setType(this.getRemoteAccessibleType(remoteAccessibleNode));
+													remoteAccessibleDevice.setRemoteAccessibleType(this.getRemoteAccessibleType(remoteAccessibleNode));
 													remoteAccessibleDevice.setPort(((Element) remoteAccessibleNode).getAttribute("port"));
 													NodeList authenticationNodes = remoteAccessibleNode.getChildNodes();
 													for (int o = 0; o < authenticationNodes.getLength(); o++){
@@ -198,6 +199,7 @@ public class ReadXml {
 											}
 										}
 										deviceList.add(remoteAccessibleDevice);
+										System.out.println("remoteAccessibleDevice added");
 										deviceGroup.addDevice(remoteAccessibleDevice);
 										}
 									}
@@ -216,11 +218,13 @@ public class ReadXml {
 											break;
 										}
 										deviceGroup.addDevice(device);
+										System.out.println("device added");
 										deviceList.add(device);
 									}
 							}
 						
 						}
+						System.out.println("all devices added to devicegroup");
 						deviceGroupList.add(deviceGroup);
 						if (!((Element) node).getAttribute("area").isEmpty()){
 							for (Area area:areaList){
@@ -357,79 +361,79 @@ public class ReadXml {
 	
 	public boolean checkVersion(){
 		try{
-			versionClientSocket = new VersionClientSocket(this.version);
-			versionClientSocket.connect();
-			versionClientSocket.sendRequest();
-			String versieControle=versionClientSocket.versieControle;
-			if (versieControle.equals("dezelfde versie")){
-				return true;
-			} else {
-				return false;
-			}
-//			System.out.println("checking version");
-//			URL url = new URL(urlString);
-//			Document document = this.getDocument(url);
-//			Document cacheDocument = this.loadDocument(new File(locationString));
-//			Element siteEquipment=document.getDocumentElement();
-//			Element cacheSiteEquipment = cacheDocument.getDocumentElement();
-//			String version = siteEquipment.getAttribute("version");
-//			String cacheVersion = cacheSiteEquipment.getAttribute("version");
-//			if (version.equals(cacheVersion)){
-//				System.out.println("same version checkVersion");
+//			versionClientSocket = new VersionClientSocket(this.version);
+//			versionClientSocket.connect();
+//			versionClientSocket.sendRequest();
+//			String versieControle=versionClientSocket.versieControle;
+//			if (versieControle.equals("dezelfde versie")){
 //				return true;
-//				
 //			} else {
-//				System.out.println("different version checkVersion");
 //				return false;
 //			}
+			System.out.println("checking version");
+			URL url = new URL(urlString);
+			Document document = this.getDocument(url);
+			Document cacheDocument = this.loadDocument(new File(locationString));
+			Element siteEquipment=document.getDocumentElement();
+			Element cacheSiteEquipment = cacheDocument.getDocumentElement();
+			String version = siteEquipment.getAttribute("version");
+			String cacheVersion = cacheSiteEquipment.getAttribute("version");
+			if (version.equals(cacheVersion)){
+				System.out.println("same version checkVersion");
+				return true;
+				
+			} else {
+				System.out.println("different version checkVersion");
+				return false;
+			}
 		}catch (Exception ex){
 			System.out.println(ex.getMessage());
 		}
 		return false;
 	}
 	
-	private void sendGetVersion(){
-		try{
-			URL url = new URL(versionUrlString);
-			HttpURLConnection con = (HttpURLConnection) url.openConnection();
-			con.setRequestMethod("GET");
-			int responseCode = con.getResponseCode();
-			System.out.println("\nSending 'GET' response to URL: "+urlString);
-			System.out.println("Response code: "+responseCode);
-			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			String inputLine;
-			StringBuffer response = new StringBuffer();
-			while((inputLine=in.readLine())!=null){
-				response.append(inputLine);
-			}
-			in.close();
-			System.out.println(response.toString());
-			this.version=response.toString();
-		} catch (Exception ex){
-			ex.printStackTrace();
-		}
-	}
-	private void sendGet() {
-		try{
-		URL obj = new URL(urlString);
-		HttpURLConnection con=(HttpURLConnection) obj.openConnection();
-		con.setRequestMethod("GET");
-		//con.setRequestProperty("version", version);
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'GET' response to URL: "+urlString);
-		System.out.println("Response code: "+responseCode);
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-		while((inputLine=in.readLine())!=null){
-			response.append(inputLine);
-		}
-		in.close();
-		System.out.println(response.toString());
-		}catch (Exception ex){
-			ex.printStackTrace();
-		}
-	}
+//	private void sendGetVersion(){
+//		try{
+//			URL url = new URL(versionUrlString);
+//			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+//			con.setRequestMethod("GET");
+//			int responseCode = con.getResponseCode();
+//			System.out.println("\nSending 'GET' response to URL: "+urlString);
+//			System.out.println("Response code: "+responseCode);
+//			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+//			String inputLine;
+//			StringBuffer response = new StringBuffer();
+//			while((inputLine=in.readLine())!=null){
+//				response.append(inputLine);
+//			}
+//			in.close();
+//			System.out.println(response.toString());
+//			this.version=response.toString();
+//		} catch (Exception ex){
+//			ex.printStackTrace();
+//		}
+//	}
+//	private void sendGet() {
+//		try{
+//		URL obj = new URL(urlString);
+//		HttpURLConnection con=(HttpURLConnection) obj.openConnection();
+//		con.setRequestMethod("GET");
+//		//con.setRequestProperty("version", version);
+//		int responseCode = con.getResponseCode();
+//		System.out.println("\nSending 'GET' response to URL: "+urlString);
+//		System.out.println("Response code: "+responseCode);
+//		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+//		String inputLine;
+//		StringBuffer response = new StringBuffer();
+//		while((inputLine=in.readLine())!=null){
+//			response.append(inputLine);
+//		}
+//		in.close();
+//		System.out.println(response.toString());
+//		}catch (Exception ex){
+//			ex.printStackTrace();
+//		}
+//	}
 	
 	public List<DeviceGroup> getDeviceGroups(){
 		return deviceGroupList;

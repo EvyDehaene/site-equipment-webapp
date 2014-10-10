@@ -1,6 +1,11 @@
 package be.camco.valueobjects;
 
-public class DeviceProperty {
+public class DeviceProperty implements Comparable<DeviceProperty> {
+	@Override
+	public String toString() {
+		return "DeviceProperty [key=" + key + ", value=" + value + "]";
+	}
+
 	private String key;
 	private String value;
 	
@@ -20,6 +25,11 @@ public class DeviceProperty {
 	}
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	@Override
+	public int compareTo(DeviceProperty o) {
+		return this.toString().compareTo(o.toString());
 	}
 	
 	

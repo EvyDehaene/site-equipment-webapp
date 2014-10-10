@@ -1,10 +1,11 @@
 package be.camco.entities;
 
 import java.util.SortedSet;
+import java.util.TreeSet;
 
-public class DeviceGroup {
+public class DeviceGroup implements Comparable<DeviceGroup>{
 	private String name;
-	private SortedSet<Device> devices;
+	private SortedSet<Device> devices = new TreeSet<>();
 	
 	public DeviceGroup(String name){
 		this.setName(name);
@@ -35,5 +36,15 @@ public class DeviceGroup {
 				devices.remove(device);
 			}
 		}
+	}
+
+	@Override
+	public int compareTo(DeviceGroup o) {
+		return this.toString().compareTo(o.toString());
+	}
+
+	@Override
+	public String toString() {
+		return "DeviceGroup [name=" + name + ", devices=" + devices + "]";
 	}
 }

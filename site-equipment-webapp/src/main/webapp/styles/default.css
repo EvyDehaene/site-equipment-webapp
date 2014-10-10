@@ -93,7 +93,7 @@ a.nav:visited{
 }
 
 a.nav:hover{
-	color:lightgray;
+	color:white;
 	font-weight: bold;
 }
 a.nav:active{
@@ -101,15 +101,31 @@ a.nav:active{
 	color:gray;
 	font-weight: bold;
 }
+a.list:link{
+	text-decoration:none;
+	color:black;
+}
+a.list:visited{
+	text-decoration:none;
+	color:black;
+}
+a.list:hover{
+	text-decoration:none;
+	color:lightgray;
+}
+a.list:active{
+	text-decoration:none;
+	color:black;
+}
 h1{
 	color:firebrick;
 	font-size:1.5em;
 }
 h2{
-	color:#60000;
+	color:firebrick;
 	font-size:1.3em;
 }
 h3{
-	color:#60000;
+	color:firebrick;
 	font-size:1.2em;
 }

@@ -3,7 +3,7 @@ package be.camco.dom;
 public class Site {
 	private String urlString;
 	private String locationString;
-	private String versionUrlString;
+	//private String versionUrlString;
 	
 	public String getUrlString() {
 		return urlString;
@@ -17,12 +17,12 @@ public class Site {
 	public void setLocationString(String locationString) {
 		this.locationString = locationString;
 	}
-	public String getVersionUrlString() {
-		return versionUrlString;
-	}
-	public void setVersionUrlString(String versionUrlString) {
-		this.versionUrlString = versionUrlString;
-	}
+//	public String getVersionUrlString() {
+//		return versionUrlString;
+//	}
+//	public void setVersionUrlString(String versionUrlString) {
+//		this.versionUrlString = versionUrlString;
+//	}
 	
 	
 }

@@ -5,14 +5,14 @@
 <head>
 <title>DeviceGroups</title>
 <link rel='stylesheet' href='${pageContext.servletContext.contextPath}/styles/default.css'/>
-	<script src="http://www.karssenberg.nl/sorttable.js"></script>
+	
 </head>
 <body id="wrapper">
 	<c:import url="/WEB-INF/JSP/menu.jsp"/>
 	<h1>DeviceGroups</h1>
 	<ul>
 		<c:forEach items="${devicegroups}" var="devicegroup">
-			<li><c:url value="devicegroups/devicegroup" var="devicegroupURL">
+			<li><c:url value="/devicegroups/devicegroup" var="devicegroupURL">
 				<c:param name = "devicegroup" value="${devicegroup}"/>
 			</c:url>
 			<a href="${devicegroupURL}">${devicegroup.name}</a>
