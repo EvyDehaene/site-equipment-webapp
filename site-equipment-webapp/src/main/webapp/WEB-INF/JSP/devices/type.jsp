@@ -31,9 +31,9 @@
 				<tr>
 					<td>
 					<c:choose>
-						<c:when test="${device.deviceType==WAGO}">
-							<c:url value="devices/wago" var="wagoURL">
-								<c:param name = "wago" value="${device.type}"/>
+						<c:when test="${device.deviceType=='WAGO'}">
+							<c:url value="/devices/wago" var="wagoURL">
+								<c:param name = "name" value="${device.name}"/>
 							</c:url>
 							<a href="${wagoURL}">${device.name}</a>
 						</c:when>
@@ -44,9 +44,9 @@
 					</td>
 					<td>
 					<c:choose> 
-						<c:when test="${device.remoteAccessibleType == HTTP}">
+						<c:when test="${device.remoteAccessibleType == 'HTTP'}">
 							<c:url value="http://${device.address}" var="URL"/>
-							<a href='${URL}'>device.address</a>	
+							<a href='${URL}' target="_blank">${device.address}</a>	
 						</c:when>
 						<c:otherwise>
 							${device.address}

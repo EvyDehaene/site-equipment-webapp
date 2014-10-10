@@ -13,8 +13,11 @@
 
 	<c:import url="/WEB-INF/JSP/menu.jsp" />
 	<h1>Site-equipment</h1>
-	<c:forEach items="${devicegroups}" var="devicegroup">
-		<h2>${devicegroup.name}</h2>
+	<c:forEach items="${deviceGroups}" var="devicegroup">
+			<h3><c:url value="/devicegroup" var="deviceGroupURL">
+					<c:param name="name" value="${devicegroup.name}"/>
+					</c:url>
+			<a class="h" href="${deviceGroupURL}">${devicegroup.name}</a></h3>
 			<c:choose>
 	<c:when test="${not empty devicegroup.devices}">
 	<table class="sortable">
@@ -36,9 +39,9 @@
 				<tr>
 					<td>
 					<c:choose>
-						<c:when test="${device.deviceType==WAGO}">
-							<c:url value="devices/wago" var="wagoURL">
-								<c:param name = "wago" value="${device.type}"/>
+						<c:when test="${device.deviceType=='WAGO'}">
+							<c:url value="/devices/wago" var="wagoURL">
+								<c:param name = "name" value="${device.name}"/>
 							</c:url>
 							<a href="${wagoURL}">${device.name}</a>
 						</c:when>
@@ -49,9 +52,9 @@
 					</td>
 					<td>
 					<c:choose> 
-						<c:when test="${device.remoteAccessibleType == HTTP}">
+						<c:when test="${device.remoteAccessibleType == 'HTTP'}">
 							<c:url value="http://${device.address}" var="URL"/>
-							<a href='${URL}'>device.address</a>	
+							<a href='${URL}' target="_blank">${device.address}</a>	
 						</c:when>
 						<c:otherwise>
 							${device.address}
@@ -89,11 +92,16 @@
 		
 	</c:choose>
 	</c:forEach>
-
 	<c:forEach items="${areas}" var="area">
-		<h2>${area.name}- ${area.description}</h2>
+		<h2><c:url value="/area" var="areaURL">
+				<c:param name = "name" value="${area.name}"/>
+			</c:url>
+			<a class="h"href="${areaURL}">${area.name} - ${area.description}</a></h2>
 		<c:forEach items="${area.deviceGroups}" var="devicegroup">
-			<h3>${devicegroup.name}</h3>
+			<h3><c:url value="/devicegroup" var="deviceGroupURL">
+					<c:param name="name" value="${devicegroup.name}"/>
+					</c:url>
+			<a class="h" href="${deviceGroupURL}">${devicegroup.name}</a></h3>
 			<c:choose>
 	<c:when test="${not empty devicegroup.devices}">
 	<table class="sortable">
@@ -115,8 +123,8 @@
 				<tr>
 					<td>
 					<c:choose>
-						<c:when test="${device.deviceType==WAGO}">
-							<c:url value="devices/wago" var="wagoURL">
+						<c:when test="${device.deviceType=='WAGO'}">
+							<c:url value="/devices/wago" var="wagoURL">
 								<c:param name = "name" value="${device.name}"/>
 							</c:url>
 							<a href="${wagoURL}">${device.name}</a>
@@ -128,9 +136,9 @@
 					</td>
 					<td>
 					<c:choose> 
-						<c:when test="${device.remoteAccessibleType == HTTP}">
+						<c:when test="${device.remoteAccessibleType == 'HTTP'}">
 							<c:url value="http://${device.address}" var="URL"/>
-							<a href='${URL}'>device.address</a>	
+							<a href='${URL}' target="_blank">${device.address}</a>	
 						</c:when>
 						<c:otherwise>
 							${device.address}

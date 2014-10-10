@@ -81,6 +81,22 @@ tbody tr:nth-child(odd) {
 	width:70px;
 	color:gray;
 }
+a:link{
+	text-decoration:none;
+	color:black;
+}
+a:hover{
+	text-decoration:none;
+	color:gray;
+}
+a:visited{
+	text-decoration:none;
+	color:black;
+}
+a:active{
+	text-decoration:none;
+	color:black;
+}
 a.nav:link{
 	text-decoration:none;
 	font-weight: bold;
@@ -117,15 +133,40 @@ a.list:active{
 	text-decoration:none;
 	color:black;
 }
+a.h:link{
+	text-decoration:none;
+	color:firebrick;
+}
+a.h:visited{
+	text-decoration:none;
+	color:firebrick;
+}
+a.h:hover{
+	text-decoration:none;
+	color:lightgray;
+}
+a.h:active{
+	text-decoration:none;
+	color:firebrick;
+}
 h1{
 	color:firebrick;
 	font-size:1.5em;
+	border-bottom-color:lightgray;
+	border-bottom-style: solid;
+	border-bottom-width:thin;
 }
 h2{
 	color:firebrick;
 	font-size:1.3em;
+	border-bottom-color:lightgray;
+	border-bottom-style: solid;
+	border-bottom-width:thin;
 }
 h3{
 	color:firebrick;
 	font-size:1.2em;
+	border-bottom-color:lightgray;
+	border-bottom-style: solid;
+	border-bottom-width:thin;
 }

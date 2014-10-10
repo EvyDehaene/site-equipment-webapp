@@ -13,8 +13,7 @@
 	<h1>${area.name} - ${area.description}</h1>
 		<c:forEach items="${area.deviceGroups}" var="devicegroup">
 			<h2>${devicegroup.name}</h2>
-				<c:choose>
-
+			<c:choose>
 	<c:when test="${not empty devicegroup.devices}">
 	<table class="sortable">
 		<thead>
@@ -31,13 +30,13 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${devices}" var="device">
+			<c:forEach items="${devicegroup.devices}" var="device">
 				<tr>
 					<td>
 					<c:choose>
-						<c:when test="${device.deviceType==WAGO}">
-							<c:url value="devices/wago" var="wagoURL">
-								<c:param name = "wago" value="${device.type}"/>
+						<c:when test="${device.deviceType=='WAGO'}">
+							<c:url value="/devices/wago" var="wagoURL">
+								<c:param name = "name" value="${device.name}"/>
 							</c:url>
 							<a href="${wagoURL}">${device.name}</a>
 						</c:when>
@@ -48,9 +47,9 @@
 					</td>
 					<td>
 					<c:choose> 
-						<c:when test="${device.remoteAccessibleType == HTTP}">
+						<c:when test="${device.remoteAccessibleType == 'HTTP'}">
 							<c:url value="http://${device.address}" var="URL"/>
-							<a href='${URL}'>device.address</a>	
+							<a href='${URL}' target="_blank">${device.address}</a>	
 						</c:when>
 						<c:otherwise>
 							${device.address}
