@@ -5,14 +5,14 @@ import be.camco.enums.IOType;
 public class IO implements Comparable<IO>{
 	private IOType ioType;
 	private int number;
-	private String name;
+	private String ioName;
 	private String on;
 	private String off;
 	
 	public IO(IOType ioType, int number, String name, String on, String off){
 		this.setIoType(ioType);
 		this.setNumber(number);
-		this.setName(name);
+		this.setIoName(name);
 		this.setOn(on);
 		this.setOff(off);
 	}
@@ -29,11 +29,11 @@ public class IO implements Comparable<IO>{
 	public void setNumber(int number) {
 		this.number = number;
 	}
-	public String getName() {
-		return name;
+	public String getIoName() {
+		return ioName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setIoName(String name) {
+		this.ioName = name;
 	}
 	public String getOn() {
 		return on;
@@ -50,7 +50,7 @@ public class IO implements Comparable<IO>{
 
 	@Override
 	public String toString() {
-		return "IO [ioType=" + ioType + ", number=" + number + ", name=" + name
+		return "IO [ioType=" + ioType + ", number=" + number + ", name=" + ioName
 				+ ", on=" + on + ", off=" + off + "]";
 	}
 

@@ -31,9 +31,9 @@
 				<tr>
 					<td>
 					<c:choose>
-						<c:when test="${device.deviceType==WAGO}">
-							<c:url value="devices/wago" var="wagoURL">
-								<c:param name = "wago" value="${device.type}"/>
+						<c:when test="${device.deviceType=='WAGO'}">
+							<c:url value="/devices/wago" var="wagoURL">
+								<c:param name = "name" value="${device.name}"/>
 							</c:url>
 							<a href="${wagoURL}">${device.name}</a>
 						</c:when>
@@ -64,7 +64,7 @@
 					</c:forEach></td>
 					<td>
 					<c:if test="${not empty device.properties}">
-						<c:url value="devices/device" var="propertyURL">
+						<c:url value="devices/deviceproperties" var="propertyURL">
 							<c:param name="name" value="${device.name}"/>
 						</c:url>
 						<a href="${propertyURL}">...</a>

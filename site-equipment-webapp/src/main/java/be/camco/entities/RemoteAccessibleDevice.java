@@ -43,6 +43,15 @@ public class RemoteAccessibleDevice extends Device implements RemoteAccessible{
 	}
 
 	@Override
+	public String toString() {
+		return "RemoteAccessibleDevice [remoteAccessibleType="
+				+ remoteAccessibleType + ", port=" + port + ", password="
+				+ password + ", username=" + username + "]";
+	}
+
+
+
+	@Override
 	public void setPort(String port) {
 		this.port=port;
 	}
@@ -72,7 +81,9 @@ public class RemoteAccessibleDevice extends Device implements RemoteAccessible{
 		return password;
 	}
 
-	
+	public int compareTo(RemoteAccessibleDevice remoteAccessibleDevice){
+		return this.toString().compareTo(remoteAccessibleDevice.toString());
+	}
 
 	
 

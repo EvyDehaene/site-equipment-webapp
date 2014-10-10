@@ -3,15 +3,18 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${area.name}</title>
+
+	<title>${area.name}</title>
+	<link rel='stylesheet' href='${pageContext.servletContext.contextPath}/styles/default.css'/>
+	<script src="http://www.karssenberg.nl/sorttable.js"></script>
 </head>
-<body>
+<body id="wrapper">
 	<c:import url="/WEB-INF/JSP/menu.jsp"/>
 	<h1>${area.name} - ${area.description}</h1>
-		<c:forEach items="${area.devicegroups}" var="devicegroup">
+		<c:forEach items="${area.deviceGroups}" var="devicegroup">
 			<h2>${devicegroup.name}</h2>
 				<c:choose>
+
 	<c:when test="${not empty devicegroup.devices}">
 	<table class="sortable">
 		<thead>
@@ -28,7 +31,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${devicegroup.devices}" var="device">
+			<c:forEach items="${devices}" var="device">
 				<tr>
 					<td>
 					<c:choose>
@@ -65,7 +68,7 @@
 					</c:forEach></td>
 					<td>
 					<c:if test="${not empty device.properties}">
-						<c:url value="devices/device" var="propertyURL">
+						<c:url value="devices/deviceproperties" var="propertyURL">
 							<c:param name="name" value="${device.name}"/>
 						</c:url>
 						<a href="${propertyURL}">...</a>

@@ -12,10 +12,10 @@
 	<h1>DeviceGroups</h1>
 	<ul>
 		<c:forEach items="${devicegroups}" var="devicegroup">
-			<li><c:url value="/devicegroups/devicegroup" var="devicegroupURL">
-				<c:param name = "devicegroup" value="${devicegroup}"/>
+			<li><c:url value="/devicegroup" var="devicegroupURL">
+				<c:param name = "name" value="${devicegroup.name}"/>
 			</c:url>
-			<a href="${devicegroupURL}">${devicegroup.name}</a>
+			<a class="list" href="${devicegroupURL}">${devicegroup.name}</a>
 			</li>
 		</c:forEach>
 		

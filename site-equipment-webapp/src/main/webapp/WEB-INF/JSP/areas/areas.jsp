@@ -13,7 +13,7 @@
 	<h1>Areas</h1>
 	<ul>
 		<c:forEach items="${areas}" var="area">
-			<li><c:url value="/areas/area" var="areaURL">
+			<li><c:url value="/area" var="areaURL">
 				<c:param name = "name" value="${area.name}"/>
 			</c:url>
 			<a class="list"href="${areaURL}">${area.name} - ${area.description}</a>
