@@ -1,0 +1,115 @@
+body {
+	font-family: Verdana;
+}
+
+#wrapper {
+	width:1200px;
+	margin:0 auto;
+}
+
+dt {
+	font-weight: bold;
+	margin-top: 0.5em;
+	padding: 0;
+}
+
+dd {
+	margin: 0;
+	padding: 0;
+}
+
+label {
+	cursor:pointer;
+}
+
+input {
+	display: block;
+	font-size: 1.1em;
+	margin-bottom: 0.5em;
+}
+
+input:focus, textarea:focus, select:focus {
+    background-color: #FFFFD6
+}
+
+div.rij input {
+	display: inline;
+}
+
+table,th,td {
+	border: 1px solid silver;
+	font-weight:normal;
+	border-collapse: collapse;
+}
+table.sortable thead {
+   cursor: pointer;
+}
+
+thead tr, tfoot tr {
+	color: steelblue;
+	background-color: lightgray;
+}
+
+td {
+	padding-left: 0.2em;
+	padding-right: 0.2em;
+}
+
+tbody tr:nth-child(even) {
+	background-color: #FAFAFA;
+}
+
+tbody tr:nth-child(odd) {
+	background-color: #E6E6E6;
+}
+
+.fout {
+	color: red;
+	margin-left: 5px;
+}
+
+.zonderbolletjes {
+	list-style: none;
+	margin-bottom: 0.2em;
+	padding: 0;
+	background-color:lightgray;
+}
+
+.zonderbolletjes li {
+	display: inline;
+	margin-right: 0.2em;
+	width:70px;
+	color:gray;
+}
+a.nav:link{
+	text-decoration:none;
+	font-weight: bold;
+	color:gray;
+}
+a.nav:visited{
+	text-decoration:none;
+	color:gray;
+	font-weight: bold;
+}
+
+a.nav:hover{
+	color:lightgray;
+	font-weight: bold;
+}
+a.nav:active{
+	text-decoration:none;
+	color:gray;
+	font-weight: bold;
+}
+h1{
+	color:firebrick;
+	font-size:1.5em;
+}
+h2{
+	color:#60000;
+	font-size:1.3em;
+}
+h3{
+	color:#60000;
+	font-size:1.2em;
+}

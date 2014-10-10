@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns='http://www.springframework.org/schema/beans' 
+xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+xsi:schemaLocation='http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd'>
+<bean id='site' class='be.camco.dom.Site'> 
+	<property name="urlString" value="http://localhost:8181/server/getxml/xml"/> 
+	<property name="locationString" value="c:\\Users\\evy\\site-equipment.xml"/>
+	<property name="versionUrlString" value=""/>
+	</bean>
+</beans>
