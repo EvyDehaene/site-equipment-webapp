@@ -9,8 +9,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class VersionClientSocket {
-	private final int PORT = 8282;
-	private final String HOSTNAME = "localhost";
+	Hulp hulp = new Hulp();
+	private final int PORT = hulp.getPortNumber();
+	private final String HOSTNAME = hulp.getServer();
 	private String version;
 	Socket socketClient;
 	String versieControle;
@@ -28,6 +29,7 @@ public class VersionClientSocket {
 	public void sendRequest() throws IOException {
 			OutputStream os = socketClient.getOutputStream();
 			ObjectOutputStream oos = new ObjectOutputStream(os);
+			oos.writeObject(new String("version"));
 			oos.writeObject(new String(version));
 			
 	}

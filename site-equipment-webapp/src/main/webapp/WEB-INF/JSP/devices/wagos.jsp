@@ -15,7 +15,7 @@
 	<h1>All wagos</h1>
 	<c:forEach items="${wagos}" var="wago">
 		<h2>WAGO: ${wago.name} (<c:url value="http://${wago.address}" var="URL"/>
-							<a href='${URL}' target="_blank">${wago.address}</a>)</h2>
+							<a href='${URL}' class="h" target="_blank">${wago.address}</a>)</h2>
 		<h3>Inputs</h3>
 		<c:if test="${not empty wago.inputs}">
 			<table class='sortable'>

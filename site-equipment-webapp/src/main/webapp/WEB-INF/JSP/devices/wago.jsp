@@ -10,7 +10,7 @@
 <body id="wrapper">
 	<c:import url="/WEB-INF/JSP/menu.jsp"/>
 	<h2>WAGO: ${wago.name} (<c:url value="http://${wago.address}" var="URL"/>
-							<a href='${URL}' target="_blank">${wago.address}</a>)</h2>
+							<a href='${URL}' class="h" target="_blank">${wago.address}</a>)</h2>
 	<h3>Inputs</h3>
 		<c:if test="${not empty wago.inputs}">
 		<table class='sortable'>

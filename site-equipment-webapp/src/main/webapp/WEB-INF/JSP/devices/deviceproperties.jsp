@@ -5,27 +5,28 @@
 <head>
 <title>Site-equipment</title>
 <link rel='stylesheet'
-	href='${pageContext.servletContext.contextPath}/styles/default.css' />
+href='${pageContext.servletContext.contextPath}/styles/default.css' />
 <script src="http://www.karssenberg.nl/sorttable.js"
-	type="text/javascript"></script>
+type="text/javascript"></script>
 </head>
 <body id="wrapper">
-
-	<c:import url="/WEB-INF/JSP/menu.jsp" />
-	<h1>Site-equipment</h1>
-	<c:forEach items="${devicegroups}" var="devicegroup">
-		<h2>${devicegroup.name}</h2>
-
-		
-			<table class="sortable">
-				<thead>
-					<tr>
-						
-					</tr>
-				</thead>
-				<tbody>
-					</tbody>
-					</table>
-	</c:forEach>
+<c:import url="/WEB-INF/JSP/menu.jsp" />
+<h2>Properties</h2>
+<table class="sortable">
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<c:forEach items="${device.properties}" var="property">
+<tr>
+<td>${property.key}</td>
+<td>${property.value}</td>
+</tr>
+</c:forEach>
+</tbody>
+</table>
 </body>
 </html>

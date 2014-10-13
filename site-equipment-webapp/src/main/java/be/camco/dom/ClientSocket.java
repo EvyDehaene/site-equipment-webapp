@@ -4,17 +4,18 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class ClientSocket {
-	public final static int SOCKET_PORT = 8181;
-	public final static String SERVER = "127.0.0.1";
-	public final static String FILE_TO_RECEIVE = "C:\\Users\\evy\\equipment-temp.xml";
+	Hulp hulp = new Hulp();
+	public final int SOCKET_PORT = hulp.getPortNumber();
+	public final String SERVER = hulp.getServer();
+	public final String FILE_TO_RECEIVE = hulp.getFilePath();
 	int bytesRead;
 	int current = 0;
-	FileOutputStream fos = null;
-	BufferedOutputStream bos = null;
 	Socket socket = null;
 	public final static int FILE_SIZE = 6022386; //file size temporary hard coded, should be bigger that the file to be downloaded
 	
@@ -27,8 +28,12 @@ public class ClientSocket {
 	public void requestXml() throws IOException{
 		byte[] mybytearray = new byte[FILE_SIZE];
 		InputStream is = socket.getInputStream();
-		fos = new FileOutputStream(FILE_TO_RECEIVE);
-		bos = new BufferedOutputStream(fos);
+		OutputStream os = socket.getOutputStream();
+		ObjectOutputStream oos = new ObjectOutputStream(os);
+		oos.writeObject(new String("xml"));
+		
+		FileOutputStream fos = new FileOutputStream(FILE_TO_RECEIVE);
+		BufferedOutputStream bos = new BufferedOutputStream(fos);
 		bytesRead = is.read(mybytearray, 0, mybytearray.length);
 		current = bytesRead;
 		do {
