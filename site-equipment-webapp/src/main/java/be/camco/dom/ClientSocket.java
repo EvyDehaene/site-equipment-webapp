@@ -11,9 +11,9 @@ import java.net.UnknownHostException;
 
 public class ClientSocket {
 	Hulp hulp = new Hulp();
-	public final int SOCKET_PORT = hulp.getPortNumber();
-	public final String SERVER = hulp.getServer();
-	public final String FILE_TO_RECEIVE = hulp.getFilePath();
+	public final int SOCKET_PORT = 8383;
+	public final String SERVER = "localhost";
+	public final String FILE_TO_RECEIVE = "C://Users//evy//equipment-temp.xml";
 	int bytesRead;
 	int current = 0;
 	Socket socket = null;
@@ -54,11 +54,12 @@ public class ClientSocket {
 		XmlClientSocket xmlClientSocket = new XmlClientSocket();
 			try{
 				xmlClientSocket.connect();
-				xmlClientSocket.readResponse();
+				xmlClientSocket.readXmlResponse();
 			} catch (UnknownHostException ex){
 				System.err.println("UnknownHostException."+ex.getMessage());
 			} catch (IOException ex){
-				System.err.println("IOException."+ex.getMessage());
+				System.err.println("IOException:");
+				ex.printStackTrace();
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}

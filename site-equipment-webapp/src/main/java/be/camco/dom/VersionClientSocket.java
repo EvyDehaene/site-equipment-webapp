@@ -10,49 +10,51 @@ import java.net.UnknownHostException;
 
 public class VersionClientSocket {
 	Hulp hulp = new Hulp();
-	private final int PORT = hulp.getPortNumber();
-	private final String HOSTNAME = hulp.getServer();
-	private String version;
-	Socket socketClient;
-	String versieControle;
+	private final int PORT = 8383;
+	private final String HOSTNAME = "localhost";
+	//private String version;
+	Socket client;
+	String versionCheck;
 	
-	public VersionClientSocket (String version){
-		this.version=version;
-	}
+//	public VersionClientSocket (String version){
+//		this.version=version;
+//	}
 	
 	public void connect() throws UnknownHostException, IOException{
 		System.out.println("Attempting to connect to: "+HOSTNAME+": "+PORT);
-		socketClient = new Socket(HOSTNAME, PORT);
+		client = new Socket(HOSTNAME, PORT);
 		System.out.println("Connection established");
 	}
 	
-	public void sendRequest() throws IOException {
-			OutputStream os = socketClient.getOutputStream();
+	public void versionRequest() throws IOException {
+			OutputStream os = client.getOutputStream();
 			ObjectOutputStream oos = new ObjectOutputStream(os);
 			oos.writeObject(new String("version"));
-			oos.writeObject(new String(version));
+			//oos.writeObject(new String(version));
+			System.out.println("sendRequest versionclient");
 			
 	}
 	
-	public void readResponse() throws IOException, ClassNotFoundException{
-		InputStream is = socketClient.getInputStream();
+	public void readVersionResponse() throws IOException, ClassNotFoundException{
+		InputStream is = client.getInputStream();
 		ObjectInputStream ois = new ObjectInputStream(is);
-		versieControle=((String)ois.readObject());
-		System.out.println(versieControle);
+		versionCheck=((String)ois.readObject());
+		System.out.println(versionCheck);
 		ois.close();
 		is.close();
+		System.out.println("readResponse version client");
 		
 	}
 	
 	public static void main (String[] args){
 		//Creating a VersionClientSocket
-		VersionClientSocket client = new VersionClientSocket("0.2");
+		VersionClientSocket client = new VersionClientSocket();
 		
 		try{
 			//trying to establish connection to the server
 			client.connect();
-			client.sendRequest();
-			client.readResponse();
+			client.versionRequest();
+			client.readVersionResponse();
 			//if successful, read response from server
 			//client.readResponse();
 		} catch (UnknownHostException ex){

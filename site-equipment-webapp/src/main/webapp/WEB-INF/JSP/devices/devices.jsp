@@ -44,7 +44,7 @@
 					</td>
 					<td>
 					<c:choose> 
-						<c:when test="${device.remoteAccessibleType == HTTP}">
+						<c:when test="${device.remoteAccessibleType == 'HTTP'}">
 							<c:url value="http://${device.address}" var="URL"/>
 							<a href='${URL}'>device.address</a>	
 						</c:when>
