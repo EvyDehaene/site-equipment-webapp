@@ -1,4 +1,4 @@
-package be.camco.dom;
+package be.camco.valueobjects;
 
 public class Site {
 	private String urlString;

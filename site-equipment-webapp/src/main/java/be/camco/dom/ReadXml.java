@@ -3,9 +3,6 @@ package be.camco.dom;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,8 +28,11 @@ import be.camco.entities.Wago;
 import be.camco.enums.DeviceType;
 import be.camco.enums.IOType;
 import be.camco.enums.RemoteAccessibleType;
+import be.camco.sockets.VersionClientSocket;
+import be.camco.sockets.XmlClientSocket;
 import be.camco.valueobjects.DeviceProperty;
 import be.camco.valueobjects.IO;
+import be.camco.valueobjects.Site;
 
 
 
@@ -51,42 +51,22 @@ public class ReadXml {
 	
 	
 	public ReadXml(){
-		this.parseXml();
+//		this.parseXml();
 	}
 	
-	private Document parseXML(InputStream stream) 
-		    {
-		        DocumentBuilderFactory documentBuilderFactory = null;
-		        DocumentBuilder documentBuilder = null;
-		        Document document = null;
-		        try
-		        {
-		            documentBuilderFactory = DocumentBuilderFactory.newInstance();
-		            documentBuilder = documentBuilderFactory.newDocumentBuilder();
-		            document = documentBuilder.parse(stream);
-		        }
-		        catch(Exception ex)
-		        {
-		           ex.printStackTrace();
-		        }       
-
-		        return document;
-		    }
-
 	public void parseXml(){
 		areaList=new ArrayList<>();
 		deviceGroupList=new ArrayList<>();
 		deviceList = new ArrayList<>();
-		try(ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/container.xml")){
+		try{
 			XmlClientSocket xmlClientSocket = new XmlClientSocket();
 			xmlClientSocket.connect();
+			xmlClientSocket.xmlRequest();
 			xmlClientSocket.readXmlResponse();
-//			Document document =  loadDocument(xmlClientSocket.receivedXml);
-			//URL url = new URL(urlString);
-			Document document = loadDocument(new File("C:/site-equipment-temp.xml"));//this.getDocument(url);
-			if (document.getDocumentElement().toString().isEmpty()){
-				document=loadDocument(new File(locationString));
-			}
+			Document document = loadDocument(new File("C:/site-equipment-temp.xml"));
+//			if (document.getDocumentElement().toString().isEmpty()){
+//				document=loadDocument(new File(locationString));
+//			}
 			Element siteEquipment=document.getDocumentElement();
 			System.out.println(siteEquipment.getAttribute("site")+ " " +siteEquipment.getAttribute("version"));
 			NodeList nodeList = document.getDocumentElement().getChildNodes();
@@ -330,32 +310,14 @@ public class ReadXml {
 		return ios;
 	}
 	
-	public Document getDocument(URL url){
-		Document document = null;
-		try{
-			if (url.getContent() != null){
-				URLConnection connection = url.openConnection();
-				document = parseXML(connection.getInputStream());
-				//
-			} else {
-				document=loadDocument(new File(locationString));
-			}
-		} catch (Exception ex){
-			System.out.println(ex.getMessage());
-			document=loadDocument(new File(locationString));
-		}
-		return document;
-	}
-	
 	public void setLocalVersion(){
 		try{
 			XmlClientSocket xmlClientSocket = new XmlClientSocket();
 			xmlClientSocket.connect();
 			xmlClientSocket.readXmlResponse();
-//			xmlClientSocket.client.close();
-			Document document =  loadDocument(new File(locationString));
-//			URL url = new URL(urlString);
-//			org.apache.commons.io.FileUtils.copyURLToFile(url, new File(locationString));
+			xmlClientSocket.client.close();
+			@SuppressWarnings("unused")
+			File file=(new File("C:/site-equipment-temp.xml"));
 		}catch (Exception ex){
 			ex.printStackTrace();
 		}
@@ -367,9 +329,9 @@ public class ReadXml {
 			versionClientSocket.connect();
 			versionClientSocket.versionRequest();
 			versionClientSocket.readVersionResponse();
-			String versieControle=versionClientSocket.versionCheck;
+			String versieControle=versionClientSocket.getVersionCheck();
 			System.out.println(versieControle);
-			Document cacheDocument = this.loadDocument(new File(locationString));
+			Document cacheDocument = this.loadDocument(new File("C:/site-equipment-temp.xml"));
 			Element cacheSiteEquipment = cacheDocument.getDocumentElement();
 			String cacheVersion = cacheSiteEquipment.getAttribute("version");
 			if (cacheVersion.equals(versieControle)){
@@ -377,22 +339,6 @@ public class ReadXml {
 			} else {
 				return false;
 			}
-//			System.out.println("checking version");
-//			URL url = new URL(urlString);
-//			Document document = this.getDocument(url);
-//			Document cacheDocument = this.loadDocument(new File(locationString));
-//			Element siteEquipment=document.getDocumentElement();
-//			Element cacheSiteEquipment = cacheDocument.getDocumentElement();
-//			String version = siteEquipment.getAttribute("version");
-//			String cacheVersion = cacheSiteEquipment.getAttribute("version");
-//			if (version.equals(cacheVersion)){
-//				System.out.println("same version checkVersion");
-//				return true;
-//				
-//			} else {
-//				System.out.println("different version checkVersion");
-//				return false;
-//			}
 		}catch (Exception ex){
 			System.out.println(ex.getMessage());
 		}

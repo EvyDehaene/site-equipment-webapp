@@ -1,4 +1,4 @@
-package be.camco.dom;
+package be.camco.sockets;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
@@ -12,7 +12,7 @@ import java.net.UnknownHostException;
 public class XmlClientSocket {
 	private final int PORT = 8383;
 	private final String HOSTNAME = "localhost";
-	Socket client;
+	public Socket client;
 	private int bytesRead;
 	private int current = 0;
 	final String FILE_TO_RECEIVE="C:/site-equipment-temp.xml";
@@ -49,6 +49,7 @@ public class XmlClientSocket {
 		System.out.println("File " + FILE_TO_RECEIVE + " downloaded ("+current+" bytes read)");
 		fos.close();
 		bos.close();
+		is.close();
 		client.close();
 	}
 	

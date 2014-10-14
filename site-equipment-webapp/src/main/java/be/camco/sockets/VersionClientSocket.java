@@ -1,4 +1,4 @@
-package be.camco.dom;
+package be.camco.sockets;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,12 +9,11 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class VersionClientSocket {
-	Hulp hulp = new Hulp();
 	private final int PORT = 8383;
 	private final String HOSTNAME = "localhost";
 	//private String version;
 	Socket client;
-	String versionCheck;
+	private String versionCheck;
 	
 //	public VersionClientSocket (String version){
 //		this.version=version;
@@ -38,8 +37,8 @@ public class VersionClientSocket {
 	public void readVersionResponse() throws IOException, ClassNotFoundException{
 		InputStream is = client.getInputStream();
 		ObjectInputStream ois = new ObjectInputStream(is);
-		versionCheck=((String)ois.readObject());
-		System.out.println(versionCheck);
+		setVersionCheck(((String)ois.readObject()));
+		System.out.println(getVersionCheck());
 		ois.close();
 		is.close();
 		System.out.println("readResponse version client");
@@ -65,6 +64,14 @@ public class VersionClientSocket {
 			System.err.println("Cannot find class."+ e.getMessage()+".");
 			e.printStackTrace();
 		}
+	}
+
+	public String getVersionCheck() {
+		return versionCheck;
+	}
+
+	public void setVersionCheck(String versionCheck) {
+		this.versionCheck = versionCheck;
 	}
 	
 }
