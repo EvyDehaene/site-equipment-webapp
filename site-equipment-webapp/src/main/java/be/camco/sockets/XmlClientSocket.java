@@ -47,10 +47,10 @@ public class XmlClientSocket {
 		bos.write(mybytearray, 0, current);
 		bos.flush();
 		System.out.println("File " + FILE_TO_RECEIVE + " downloaded ("+current+" bytes read)");
-		fos.close();
-		bos.close();
-		is.close();
-		client.close();
+//		fos.close();
+//		bos.close();
+//		is.close();
+//		client.close();
 	}
 	
 	public static void main(String[] args) throws IOException {

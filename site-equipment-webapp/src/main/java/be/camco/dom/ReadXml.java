@@ -3,6 +3,7 @@ package be.camco.dom;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,9 +35,6 @@ import be.camco.valueobjects.DeviceProperty;
 import be.camco.valueobjects.IO;
 import be.camco.valueobjects.Site;
 
-
-
-
 public class ReadXml {
 	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/container.xml");
 	private List<Area> areaList = new ArrayList<>();
@@ -45,6 +43,7 @@ public class ReadXml {
 	Site site = context.getBean(Site.class);
 	public String urlString = site.getUrlString();
 	public String locationString=site.getLocationString();
+	public String cacheLocationString = site.getCacheLocationString();
 	public Date date = new Date();
 	String version=null;
 	VersionClientSocket versionClientSocket;
@@ -59,15 +58,18 @@ public class ReadXml {
 		deviceGroupList=new ArrayList<>();
 		deviceList = new ArrayList<>();
 		try{
-			XmlClientSocket xmlClientSocket = new XmlClientSocket();
-			xmlClientSocket.connect();
-			xmlClientSocket.xmlRequest();
-			xmlClientSocket.readXmlResponse();
-			Document document = loadDocument(new File("C:/site-equipment-temp.xml"));
-//			if (document.getDocumentElement().toString().isEmpty()){
-//				document=loadDocument(new File(locationString));
-//			}
+			Document document;
+			if (checkServerOnline() == true){
+				XmlClientSocket xmlClientSocket = new XmlClientSocket();
+				xmlClientSocket.connect();
+				xmlClientSocket.xmlRequest();
+				xmlClientSocket.readXmlResponse();
+				document = loadDocument(new File(locationString));
+			} else {
+				document = loadDocument(new File(locationString));
+			}
 			Element siteEquipment=document.getDocumentElement();
+			System.out.println(siteEquipment.getNodeName().toString());
 			System.out.println(siteEquipment.getAttribute("site")+ " " +siteEquipment.getAttribute("version"));
 			NodeList nodeList = document.getDocumentElement().getChildNodes();
 			for (int i = 0; i < nodeList.getLength(); i++){
@@ -312,12 +314,12 @@ public class ReadXml {
 	
 	public void setLocalVersion(){
 		try{
-			XmlClientSocket xmlClientSocket = new XmlClientSocket();
-			xmlClientSocket.connect();
-			xmlClientSocket.readXmlResponse();
-			xmlClientSocket.client.close();
-			@SuppressWarnings("unused")
-			File file=(new File("C:/site-equipment-temp.xml"));
+			if (checkServerOnline() == true){
+				XmlClientSocket xmlClientSocket = new XmlClientSocket();
+				xmlClientSocket.connect();
+				xmlClientSocket.readXmlResponse();
+				xmlClientSocket.client.close();
+			}
 		}catch (Exception ex){
 			ex.printStackTrace();
 		}
@@ -325,26 +327,39 @@ public class ReadXml {
 	
 	public boolean checkVersion(){
 		try{
-			versionClientSocket = new VersionClientSocket();
-			versionClientSocket.connect();
-			versionClientSocket.versionRequest();
-			versionClientSocket.readVersionResponse();
-			String versieControle=versionClientSocket.getVersionCheck();
-			System.out.println(versieControle);
-			Document cacheDocument = this.loadDocument(new File("C:/site-equipment-temp.xml"));
-			Element cacheSiteEquipment = cacheDocument.getDocumentElement();
-			String cacheVersion = cacheSiteEquipment.getAttribute("version");
-			if (cacheVersion.equals(versieControle)){
-				return true;
-			} else {
-				return false;
+			if (checkServerOnline() == true){
+				versionClientSocket = new VersionClientSocket();
+				versionClientSocket.connect();
+				versionClientSocket.versionRequest();
+				String versieControle=versionClientSocket.getVersionCheck();
+				versionClientSocket.readVersionResponse();
+				System.out.println(versieControle);
+				Document cacheDocument = this.loadDocument(new File(locationString));
+				Element cacheSiteEquipment = cacheDocument.getDocumentElement();
+				String cacheVersion = cacheSiteEquipment.getAttribute("version");
+				if (cacheVersion.equals(versieControle)){
+					return true;
+				} else {
+					return false;
+				}
 			}
+			
+			
 		}catch (Exception ex){
 			System.out.println(ex.getMessage());
 		}
 		return false;
 	}
 	
+	public boolean checkServerOnline(){
+		try{
+			Socket s = new Socket("localhost", 8383);
+			s.close();
+			return true;
+		} catch (Exception ex){
+			return false;
+		}
+	}
 	
 	public List<DeviceGroup> getDeviceGroups(){
 		return deviceGroupList;

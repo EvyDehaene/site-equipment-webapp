@@ -3,6 +3,7 @@ package be.camco.valueobjects;
 public class Site {
 	private String urlString;
 	private String locationString;
+	private String cacheLocationString;
 	//private String versionUrlString;
 	
 	public String getUrlString() {
@@ -23,6 +24,12 @@ public class Site {
 //	public void setVersionUrlString(String versionUrlString) {
 //		this.versionUrlString = versionUrlString;
 //	}
+	public String getCacheLocationString() {
+		return cacheLocationString;
+	}
+	public void setCacheLocationString(String cacheLocationString) {
+		this.cacheLocationString = cacheLocationString;
+	}
 	
 	
 }

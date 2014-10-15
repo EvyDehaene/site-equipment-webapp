@@ -5,7 +5,9 @@
 	http://www.springframework.org/schema/beans/spring-beans.xsd'>
 	<bean id='site' class='be.camco.valueobjects.Site'> 
 		<property name="urlString" value="http://localhost:8181/server/getxml/xml"/> 
-		<property name="locationString" value="C:/Users/evy/equipment.xml"/>
+		<property name="locationString" value="C:/site-equipment-temp.xml"/>
+		<property name="cacheLocationString" value="C:/Users/evy/site-equipment.xml"/>
+		
 		<!-- <property name="versionUrlString" value=""/> -->
 	</bean>
 <!-- 	<bean id="hulp" class="be.camco.dom.Hulp"> -->
